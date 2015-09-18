@@ -56,7 +56,7 @@ contract Glofile {
 
   /**
    * @notice Set your Glofile safety level to `safetyLevel`
-   * @dev Sets the safety level. This applies to the Glofile itself. The account may publish other content that needs to be rated separately.
+   * @dev Sets the safety level. The account may publish content that is less safe than this, so long as it is flagged as such.
    * @param safetyLevel safety level
    */
   function setSafetyLevel(SafetyLevel safetyLevel) {
