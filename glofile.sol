@@ -147,7 +147,7 @@ contract Glofile {
   /**
    * @notice Get Glofile basic info
    * @dev Gets all the info that can be retreived in a single call.
-   * @param address account to access - defaults to sender.
+   * @param address account to access - defaults to sender
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
@@ -245,7 +245,7 @@ contract Glofile {
   /**
    * @notice Get the list of language code a Glofile bio is available in
    * @dev Gets the list of language codes the bio is available in.
-   * @param address account to access - defaults to sender.
+   * @param address account to access - defaults to sender
    * @return array of 3 letter ISO 639-3 language codes
    */
   function getBioLangCodes(address account) constant returns (bytes3[]) {
@@ -257,7 +257,7 @@ contract Glofile {
    * @notice Get the Glofile bio with language code `lang`
    * @dev Gets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
-   * @param address account to access - defaults to sender.
+   * @param address account to access - defaults to sender
    * @return raw Deflated UTF-8 Markdown of bio
    */
   function getBioTranslation(bytes3 lang, address account) constant returns (bytes) {
