@@ -11,8 +11,8 @@ contract Glofile {
     bool dontIndex;
     GlofileType glofileType;
     SafetyLevel safetyLevel;
-    bytes fullName;
-    bytes location;
+    string fullName;
+    string location;
     bytes topics;
     bytes uris;
     bytes parents;
@@ -65,11 +65,11 @@ contract Glofile {
   }
 
   /**
-   * @notice Set your Glofile full name
+   * @notice Set your Glofile full name to `fullName`
    * @dev Sets the full name.
-   * @param fullName raw Deflated UTF-8 string of full name - max string length 128 chars
+   * @param fullName UTF-8 string of full name - max length 128 chars
    */
-  function setFullName(bytes fullName) {
+  function setFullName(string fullName) {
     glofiles[msg.sender].fullName = fullName;
     Updated(msg.sender);
   }
@@ -77,9 +77,9 @@ contract Glofile {
   /**
    * @notice Set your Glofile location
    * @dev Sets the location. A dedicated contract could be used for more sophisticated location functionality.
-   * @param location raw Deflated UTF-8 string of location - max string length 128 chars
+   * @param location UTF-8 string of location - max string length 128 chars
    */
-  function setLocation(bytes location) {
+  function setLocation(string location) {
     glofiles[msg.sender].location = location;
     Updated(msg.sender);
   }
@@ -151,8 +151,8 @@ contract Glofile {
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
-   * @return fullName raw Deflated UTF-8 string of full name
-   * @return location raw Deflated UTF-8 string of location
+   * @return fullName UTF-8 string of full name
+   * @return location UTF-8 string of location
    * @return topics raw Deflated UTF-8 of space-separated topics
    * @return uris raw Deflated UTF-8 string of space-separated percent-encoded URIs.
    * @return parents raw Deflated UTF-8 string of space-separated usernames
