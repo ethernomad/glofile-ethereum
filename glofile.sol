@@ -87,7 +87,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile topics
    * @dev Sets the topics. This is a hint that this account will be publishing content in other contracts under these topics.
-   * @param topics raw Deflated UTF-8 string of space-separated topics
+   * @param topics UTF-8 string of space-separated topic compressed with DEFLATE
    */
   function setTopics(bytes topics) {
     glofiles[msg.sender].topics = topics;
@@ -97,7 +97,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile URIs
    * @dev Sets the URIs. These URIs can reference anthing associated with the account, e.g. social network accounts.
-   * @param uris raw Deflated UTF-8 string of space-separated percent-encoded URIs
+   * @param uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
    */
   function setUris(bytes uris) {
     glofiles[msg.sender].uris = uris;
@@ -107,7 +107,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile parents
    * @dev Sets the parents.
-   * @param parents raw Deflated UTF-8 string of space-separated usernames
+   * @param parents UTF-8 string of space-separated usernames compressed with DEFLATE
    */
   function setParents(bytes parents) {
     glofiles[msg.sender].parents = parents;
@@ -117,7 +117,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile children
    * @dev Sets the children.
-   * @param children Raw Deflated UTF-8 string of space-separated usernames
+   * @param children UTF-8 string of space-separated usernames compressed with DEFLATE
    */
   function setChildren(bytes children) {
     glofiles[msg.sender].children = children;
@@ -153,10 +153,10 @@ contract Glofile {
    * @return safetyLevel safety level
    * @return fullName UTF-8 string of full name
    * @return location UTF-8 string of location
-   * @return topics raw Deflated UTF-8 of space-separated topics
-   * @return uris raw Deflated UTF-8 string of space-separated percent-encoded URIs.
-   * @return parents raw Deflated UTF-8 string of space-separated usernames
-   * @return children raw Deflated UTF-8 string of space-separated usernames
+   * @return topics UTF-8 of space-separated topics compressed with DEFLATE
+   * @return uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
+   * @return parents UTF-8 string of space-separated usernames compressed with DEFLATE
+   * @return children UTF-8 string of space-separated usernames compressed with DEFLATE
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
    */
@@ -180,7 +180,7 @@ contract Glofile {
    * @notice Set your Glofile bio with langauge code `lang`
    * @dev Sets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
-   * @param translation raw Deflated UTF-8 Markdown of bio - max Markdown length 256 chars
+   * @param translation UTF-8 Markdown of bio compressed with DEFLATE - max Markdown length 256 chars
    */
   function setBio(bytes3 lang, bytes translation) {
     Glofile glofile = glofiles[msg.sender];
@@ -258,7 +258,7 @@ contract Glofile {
    * @dev Gets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
    * @param address account to access - defaults to sender
-   * @return raw Deflated UTF-8 Markdown of bio
+   * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
   function getBioTranslation(bytes3 lang, address account) constant returns (bytes) {
     if (account == 0) account = msg.sender;
@@ -442,7 +442,7 @@ contract Glofile {
   /**
    * @notice Add a public key to your Glofile
    * @dev Adds a public key.
-   * @param publicKey Raw Deflated UTF-8 public key
+   * @param publicKey UTF-8 public key compressed with DEFLATE
    */
   function addPublicKey(bytes publicKey) {
     Glofile glofile = glofiles[msg.sender];
@@ -477,7 +477,7 @@ contract Glofile {
    * @dev Gets the public key with a specific index.
    * @param i index of public key to get
    * @param address account to access - defaults to sender
-   * @return raw Deflated UTF-8 public key
+   * @return UTF-8 public key compressed with DEFLATE
    */
   function getPublicKey(uint i, address account) constant returns (bytes) {
     if (account == 0) account = msg.sender;
