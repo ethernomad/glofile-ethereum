@@ -400,7 +400,7 @@ contract Glofile {
   /**
    * @notice Delete your Glofile background image with index `i`
    * @dev Deletes the background image with a specific index.
-   * @param i index of background image to get
+   * @param i index of background image to delete
    */
   function deleteBackgroundImage(uint i) {
     delete glofiles[msg.sender].backgroundImages[i];
