@@ -269,7 +269,7 @@ contract Glofile {
    * @notice Set your Glofile avatar with index `i` to `ipfsHash`
    * @dev Sets the avatar with a specific index to an IPFS hash.
    * @param i index of avatar to set
-   * @param ipfsHash binary ipfs hash of image
+   * @param ipfsHash binary IPFS hash of image
    */
   function setAvatar(uint i, bytes ipfsHash) {
     bytes[] avatars = glofiles[msg.sender].avatars;
@@ -316,7 +316,7 @@ contract Glofile {
    * @dev Gets the avatar with a specific index.
    * @param i index of avatar to get
    * @param address account to access - defaults to sender
-   * @return binary ipfs hash of image
+   * @return binary IPFS hash of image
    */
   function getAvatar(uint i, address account) constant returns (bytes) {
     if (account == 0) account = msg.sender;
@@ -327,7 +327,7 @@ contract Glofile {
    * @notice Set your Glofile cover image with index `i` to `ipfsHash`
    * @dev Sets the cover image with a specific index to an IPFS hash.
    * @param i index of cover image to set
-   * @param ipfsHash binary ipfs hash of image
+   * @param ipfsHash binary IPFS hash of image
    */
   function setCoverImage(uint i, bytes ipfsHash) {
     bytes[] coverImages = glofiles[msg.sender].coverImages;
@@ -374,7 +374,7 @@ contract Glofile {
    * @dev Gets the cover image with a specific index.
    * @param i index of cover image to get
    * @param ipfsHash binary ipfs hash of image
-   * @return binary ipfs hash of image
+   * @return binary IPFS hash of image
    */
   function getCoverImage(uint i, address account) constant returns (bytes) {
     if (account == 0) account = msg.sender;
@@ -385,7 +385,7 @@ contract Glofile {
    * @notice Set your Glofile background image with index `i` to `ipfsHash`
    * @dev Sets the background image with a specific index to an IPFS hash.
    * @param i index of background image to set
-   * @param ipfsHash binary ipfs hash of image
+   * @param ipfsHash binary IPFS hash of image
    */
   function setBackgroundImage(uint i, bytes ipfsHash) {
     bytes[] backgroundImages = glofiles[msg.sender].backgroundImages;
@@ -432,7 +432,7 @@ contract Glofile {
    * @dev Gets the background image with a specific index.
    * @param i index of cover image to get
    * @param address account to access - defaults to sender
-   * @return binary ipfs hash of image
+   * @return binary IPFS hash of image
    */
   function getBackgroundImage(uint i, address account) constant returns (bytes) {
     if (account == 0) account = msg.sender;
