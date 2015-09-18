@@ -11,7 +11,7 @@ contract Glofile {
     bool dontIndex;
     GlofileType glofileType;
     SafetyLevel safetyLevel;
-    bytes name;
+    bytes fullName;
     bytes location;
     bytes topics;
     bytes uris;
@@ -67,10 +67,10 @@ contract Glofile {
   /**
    * @notice Set your Glofile full name
    * @dev Sets the full name.
-   * @param name raw Deflated UTF-8 string of full name - max string length 128 chars
+   * @param fullName raw Deflated UTF-8 string of full name - max string length 128 chars
    */
-  function setName(bytes name) {
-    glofiles[msg.sender].name = name;
+  function setFullName(bytes fullName) {
+    glofiles[msg.sender].fullName = fullName;
     Updated(msg.sender);
   }
 
@@ -151,7 +151,7 @@ contract Glofile {
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
-   * @return name raw Deflated UTF-8 string of full name
+   * @return fullName raw Deflated UTF-8 string of full name
    * @return location raw Deflated UTF-8 string of location
    * @return topics raw Deflated UTF-8 of space-separated topics
    * @return uris raw Deflated UTF-8 string of space-separated percent-encoded URIs.
@@ -160,13 +160,13 @@ contract Glofile {
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
    */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, bytes name, bytes location, bytes topics, bytes uris, bytes parents, bytes children, bytes3[] foregroundColors, bytes3[] backgroundColors) {
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, bytes fullName, bytes location, bytes topics, bytes uris, bytes parents, bytes children, bytes3[] foregroundColors, bytes3[] backgroundColors) {
     if (account == 0) account = msg.sender;
     Glofile glofile = glofiles[account];
     dontIndex = glofile.dontIndex;
     glofileType = glofile.glofileType;
     safetyLevel = glofile.safetyLevel;
-    name = glofile.name;
+    fullName = glofile.fullName;
     location = glofile.location;
     topics = glofile.topics;
     uris = glofile.uris;
