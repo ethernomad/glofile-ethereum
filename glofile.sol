@@ -67,7 +67,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile full name
    * @dev Sets the full name.
-   * @param name raw Deflated UTF-8 string of full name
+   * @param name raw Deflated UTF-8 string of full name - max string length 128 chars
    */
   function setName(bytes name) {
     glofiles[msg.sender].name = name;
@@ -77,7 +77,7 @@ contract Glofile {
   /**
    * @notice Set your Glofile location
    * @dev Sets the location. A dedicated contract could be used for more sophisticated location functionality.
-   * @param location raw Deflated UTF-8 string of location
+   * @param location raw Deflated UTF-8 string of location - max string length 128 chars
    */
   function setLocation(bytes location) {
     glofiles[msg.sender].location = location;
@@ -180,7 +180,7 @@ contract Glofile {
    * @notice Set your Glofile bio with langauge code `lang`
    * @dev Sets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
-   * @param translation raw Deflated UTF-8 Markdown of bio
+   * @param translation raw Deflated UTF-8 Markdown of bio - max Markdown length 256 chars
    */
   function setBio(bytes3 lang, bytes translation) {
     Glofile glofile = glofiles[msg.sender];
