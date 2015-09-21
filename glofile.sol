@@ -160,7 +160,7 @@ contract Glofile {
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
    */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, bytes fullName, bytes location, bytes topics, bytes uris, bytes parents, bytes children, bytes3[] foregroundColors, bytes3[] backgroundColors) {
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes topics, bytes uris, bytes parents, bytes children, bytes3[] foregroundColors, bytes3[] backgroundColors) {
     if (account == 0) account = msg.sender;
     Glofile glofile = glofiles[account];
     dontIndex = glofile.dontIndex;
