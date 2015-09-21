@@ -11,6 +11,7 @@ contract Glofile {
     bool dontIndex;
     GlofileType glofileType;
     SafetyLevel safetyLevel;
+    uint16 publicKeyCount;
     string fullName;
     string location;
     bytes topics;
@@ -23,7 +24,6 @@ contract Glofile {
     bytes[] avatars;
     bytes[] coverImages;
     bytes[] backgroundImages;
-    bytes[] publicKeys;
     mapping (bytes3 => bytes) bioTranslations;
   }
 
@@ -31,7 +31,7 @@ contract Glofile {
 
   event Updated(address indexed account);
   event Deleted(address indexed account);
-  event PublicKeyAdded(address indexed account, uint indexed i);
+  event PublicKeyAdded(address indexed account, uint indexed i, bytes publicKey);
   event PublicKeyDeleted(address indexed account, uint indexed i);
 
   /**
@@ -445,10 +445,8 @@ contract Glofile {
    * @param publicKey UTF-8 public key compressed with DEFLATE
    */
   function addPublicKey(bytes publicKey) {
-    Glofile glofile = glofiles[msg.sender];
-    uint i = glofile.publicKeys.length++;
-    glofile.publicKeys[i] = publicKey;
-    PublicKeyAdded(msg.sender, i);
+    uint i = glofiles[msg.sender].publicKeyCount++;
+    PublicKeyAdded(msg.sender, i, publicKey);
   }
 
   /**
@@ -457,29 +455,7 @@ contract Glofile {
    * @param i index of public key to delete
    */
   function deletePublicKey(uint i) {
-    delete glofiles[msg.sender].publicKeys[i];
     PublicKeyDeleted(msg.sender, i);
-  }
-
-  /**
-   * @notice Get the number of public keys in the Glofile
-   * @dev Gets the number of public keys.
-   * @param account Glofile to access
-   * @return the number of public keys
-   */
-  function getPublicKeyCount(address account) constant returns (uint) {
-    return glofiles[account].publicKeys.length;
-  }
-
-  /**
-   * @notice Get the public key with index `i` from the Glofile
-   * @dev Gets the public key with a specific index.
-   * @param i index of public key to get
-   * @param account Glofile to access
-   * @return UTF-8 public key compressed with DEFLATE
-   */
-  function getPublicKey(uint i, address account) constant returns (bytes) {
-    return glofiles[account].publicKeys[i];
   }
 
   /**
