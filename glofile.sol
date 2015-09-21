@@ -472,6 +472,7 @@ contract Glofile {
   /**
    * @notice Delete your entire Glofile
    * @dev Deletes the Glofile completely.
+   * TODO: make sure this deletes everything
    */
   function deleteEntireGlofile() {
     delete glofiles[msg.sender];
