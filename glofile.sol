@@ -29,10 +29,10 @@ contract Glofile {
 
   mapping (address => Glofile) glofiles;
 
-  event Updated(address indexed account);
-  event Deleted(address indexed account);
-  event PublicKeyAdded(address indexed account, uint indexed i, bytes publicKey);
-  event PublicKeyDeleted(address indexed account, uint indexed i);
+  event Update(address indexed account);
+  event Delete(address indexed account);
+  event PublicKeyAdd(address indexed account, uint indexed i, bytes publicKey);
+  event PublicKeyDelete(address indexed account, uint indexed i);
 
   /**
    * @notice Set your Glofile don't index flag to `dontIndex`
@@ -41,7 +41,7 @@ contract Glofile {
    */
   function setDontIndex(bool dontIndex) {
     glofiles[msg.sender].dontIndex = dontIndex;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -51,7 +51,7 @@ contract Glofile {
    */
   function setGlofileType(GlofileType glofileType) {
     glofiles[msg.sender].glofileType = glofileType;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -61,7 +61,7 @@ contract Glofile {
    */
   function setSafetyLevel(SafetyLevel safetyLevel) {
     glofiles[msg.sender].safetyLevel = safetyLevel;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -71,7 +71,7 @@ contract Glofile {
    */
   function setFullName(string fullName) {
     glofiles[msg.sender].fullName = fullName;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -81,7 +81,7 @@ contract Glofile {
    */
   function setLocation(string location) {
     glofiles[msg.sender].location = location;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -91,7 +91,7 @@ contract Glofile {
    */
   function setTopics(bytes topics) {
     glofiles[msg.sender].topics = topics;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -101,7 +101,7 @@ contract Glofile {
    */
   function setUris(bytes uris) {
     glofiles[msg.sender].uris = uris;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -111,7 +111,7 @@ contract Glofile {
    */
   function setParents(bytes parents) {
     glofiles[msg.sender].parents = parents;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -121,7 +121,7 @@ contract Glofile {
    */
   function setChildren(bytes children) {
     glofiles[msg.sender].children = children;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -158,7 +158,7 @@ contract Glofile {
    */
   function setForegroundColors(bytes3[] colors) {
     glofiles[msg.sender].foregroundColors = colors;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -168,7 +168,7 @@ contract Glofile {
    */
   function setBackgroundColors(bytes3[] colors) {
     glofiles[msg.sender].backgroundColors = colors;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -213,7 +213,7 @@ contract Glofile {
     }
     // Set translation.
     glofile.bioTranslations[lang] = translation;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -232,7 +232,7 @@ contract Glofile {
     // Delete the actual mapping in case a client accesses without checking
     // language key.
     delete glofile.bioTranslations[lang];
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -247,7 +247,7 @@ contract Glofile {
       delete glofile.bioTranslations[glofile.bioLangs[i]];
     }
     delete glofile.bioLangs;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -284,7 +284,7 @@ contract Glofile {
       avatars.length = i;
     }
     avatars[i] = ipfsHash;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -294,7 +294,7 @@ contract Glofile {
    */
   function deleteAvatar(uint i) {
     delete glofiles[msg.sender].avatars[i];
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -303,7 +303,7 @@ contract Glofile {
    */
   function deleteAllAvatars() {
     delete glofiles[msg.sender].avatars;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -340,7 +340,7 @@ contract Glofile {
       coverImages.length = i;
     }
     coverImages[i] = ipfsHash;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -350,7 +350,7 @@ contract Glofile {
    */
   function deleteCoverImage(uint i) {
     delete glofiles[msg.sender].coverImages[i];
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -359,7 +359,7 @@ contract Glofile {
    */
   function deleteAllCoverImages() {
     delete glofiles[msg.sender].coverImages;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -396,7 +396,7 @@ contract Glofile {
       backgroundImages.length = i;
     }
     backgroundImages[i] = ipfsHash;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -406,7 +406,7 @@ contract Glofile {
    */
   function deleteBackgroundImage(uint i) {
     delete glofiles[msg.sender].backgroundImages[i];
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -415,7 +415,7 @@ contract Glofile {
    */
   function deleteAllBackgroundImages() {
     delete glofiles[msg.sender].backgroundImages;
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -446,7 +446,7 @@ contract Glofile {
    */
   function addPublicKey(bytes publicKey) {
     uint i = glofiles[msg.sender].publicKeyCount++;
-    PublicKeyAdded(msg.sender, i, publicKey);
+    PublicKeyAdd(msg.sender, i, publicKey);
   }
 
   /**
@@ -455,7 +455,7 @@ contract Glofile {
    * @param i index of public key to delete
    */
   function deletePublicKey(uint i) {
-    PublicKeyDeleted(msg.sender, i);
+    PublicKeyDelete(msg.sender, i);
   }
 
   /**
@@ -466,7 +466,7 @@ contract Glofile {
    */
   function copyEntireGlofile(address source) {
     glofiles[msg.sender] = glofiles[source];
-    Updated(msg.sender);
+    Update(msg.sender);
   }
 
   /**
@@ -476,7 +476,7 @@ contract Glofile {
    */
   function deleteEntireGlofile() {
     delete glofiles[msg.sender];
-    Deleted(msg.sender);
+    Delete(msg.sender);
   }
 
 }
