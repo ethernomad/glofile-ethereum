@@ -147,7 +147,7 @@ contract Glofile {
   /**
    * @notice Get Glofile basic info
    * @dev Gets all the info that can be retreived in a single call.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
@@ -245,7 +245,7 @@ contract Glofile {
   /**
    * @notice Get the list of language code a Glofile bio is available in
    * @dev Gets the list of language codes the bio is available in.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return array of 3 letter ISO 639-3 language codes
    */
   function getBioLangCodes(address account) constant returns (bytes3[]) {
@@ -257,7 +257,7 @@ contract Glofile {
    * @notice Get the Glofile bio with language code `lang`
    * @dev Gets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
   function getBioTranslation(bytes3 lang, address account) constant returns (bytes) {
@@ -303,7 +303,7 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile avatars
    * @dev Gets the number of avatars.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return number of avatars
    */
   function getAvatarCount(address account) constant returns (uint) {
@@ -315,7 +315,7 @@ contract Glofile {
    * @notice Get the Glofile avatar with index `i`
    * @dev Gets the avatar with a specific index.
    * @param i index of avatar to get
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return binary IPFS hash of image
    */
   function getAvatar(uint i, address account) constant returns (bytes) {
@@ -361,7 +361,7 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile cover images
    * @dev Gets the number of cover images.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return number of cover images
    */
   function getCoverImageCount(address account) constant returns (uint) {
@@ -373,7 +373,7 @@ contract Glofile {
    * @notice Get the Glofile cover image with index `i`
    * @dev Gets the cover image with a specific index.
    * @param i index of cover image to get
-   * @param ipfsHash binary ipfs hash of image
+   * @param account account to access - defaults to sender
    * @return binary IPFS hash of image
    */
   function getCoverImage(uint i, address account) constant returns (bytes) {
@@ -419,7 +419,7 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile background images
    * @dev Gets the number of background images.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return number of background images
    */
   function getBackgroundImageCount(address account) constant returns (uint) {
@@ -431,7 +431,7 @@ contract Glofile {
    * @notice Get the Glofile background image with index `i`
    * @dev Gets the background image with a specific index.
    * @param i index of cover image to get
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return binary IPFS hash of image
    */
   function getBackgroundImage(uint i, address account) constant returns (bytes) {
@@ -464,7 +464,7 @@ contract Glofile {
   /**
    * @notice Get the number of public keys in the Glofile
    * @dev Gets the number of public keys.
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return the number of public keys
    */
   function getPublicKeyCount(address account) constant returns (uint) {
@@ -476,7 +476,7 @@ contract Glofile {
    * @notice Get the public key with index `i` from the Glofile
    * @dev Gets the public key with a specific index.
    * @param i index of public key to get
-   * @param address account to access - defaults to sender
+   * @param account account to access - defaults to sender
    * @return UTF-8 public key compressed with DEFLATE
    */
   function getPublicKey(uint i, address account) constant returns (bytes) {
