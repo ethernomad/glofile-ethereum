@@ -281,7 +281,7 @@ contract Glofile {
     bytes[] avatars = glofiles[msg.sender].avatars;
     // Make sure the array is long enough.
     if (avatars.length <= i) {
-      avatars.length = i;
+      avatars.length = i + 1;
     }
     avatars[i] = ipfsHash;
     Update(msg.sender);
@@ -337,7 +337,7 @@ contract Glofile {
     bytes[] coverImages = glofiles[msg.sender].coverImages;
     // Make sure the array is long enough.
     if (coverImages.length <= i) {
-      coverImages.length = i;
+      coverImages.length = i + 1;
     }
     coverImages[i] = ipfsHash;
     Update(msg.sender);
@@ -393,7 +393,7 @@ contract Glofile {
     bytes[] backgroundImages = glofiles[msg.sender].backgroundImages;
     // Make sure the array is long enough.
     if (backgroundImages.length <= i) {
-      backgroundImages.length = i;
+      backgroundImages.length = i + 1;
     }
     backgroundImages[i] = ipfsHash;
     Update(msg.sender);
