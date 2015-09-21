@@ -263,11 +263,11 @@ contract Glofile {
   /**
    * @notice Get the Glofile bio with language code `lang`
    * @dev Gets the bio in a specific language.
-   * @param lang 3 letter ISO 639-3 language code
    * @param account Glofile to access
+   * @param lang 3 letter ISO 639-3 language code
    * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
-  function getBioTranslation(bytes3 lang, address account) constant returns (bytes) {
+  function getBioTranslation(address account, bytes3 lang) constant returns (bytes) {
     return glofiles[account].bioTranslations[lang];
   }
 
@@ -319,11 +319,11 @@ contract Glofile {
   /**
    * @notice Get the Glofile avatar with index `i`
    * @dev Gets the avatar with a specific index.
-   * @param i index of avatar to get
    * @param account Glofile to access
+   * @param i index of avatar to get
    * @return binary IPFS hash of image
    */
-  function getAvatar(uint i, address account) constant returns (bytes) {
+  function getAvatar(address account, uint i) constant returns (bytes) {
     return glofiles[account].avatars[i];
   }
 
@@ -375,11 +375,11 @@ contract Glofile {
   /**
    * @notice Get the Glofile cover image with index `i`
    * @dev Gets the cover image with a specific index.
-   * @param i index of cover image to get
    * @param account Glofile to access
+   * @param i index of cover image to get
    * @return binary IPFS hash of image
    */
-  function getCoverImage(uint i, address account) constant returns (bytes) {
+  function getCoverImage(address account, uint i) constant returns (bytes) {
     return glofiles[account].coverImages[i];
   }
 
@@ -435,7 +435,7 @@ contract Glofile {
    * @param account Glofile to access
    * @return binary IPFS hash of image
    */
-  function getBackgroundImage(uint i, address account) constant returns (bytes) {
+  function getBackgroundImage(address account, uint i) constant returns (bytes) {
     return glofiles[account].backgroundImages[i];
   }
 
