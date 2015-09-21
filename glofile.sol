@@ -125,6 +125,34 @@ contract Glofile {
   }
 
   /**
+   * @notice Get Glofile basic info
+   * @dev Gets all the info that can be retreived in a single call.
+   * @param account account to access - defaults to sender
+   * @return dontIndex flag to indicate that this Glofile should not be indexed
+   * @return glofileType Glofile type
+   * @return safetyLevel safety level
+   * @return fullName UTF-8 string of full name
+   * @return location UTF-8 string of location
+   * @return topics UTF-8 of space-separated topics compressed with DEFLATE
+   * @return uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
+   * @return parents UTF-8 string of space-separated usernames compressed with DEFLATE
+   * @return children UTF-8 string of space-separated usernames compressed with DEFLATE
+   */
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes topics, bytes uris, bytes parents, bytes children) {
+    if (account == 0) account = msg.sender;
+    Glofile glofile = glofiles[account];
+    dontIndex = glofile.dontIndex;
+    glofileType = glofile.glofileType;
+    safetyLevel = glofile.safetyLevel;
+    fullName = glofile.fullName;
+    location = glofile.location;
+    topics = glofile.topics;
+    uris = glofile.uris;
+    parents = glofile.parents;
+    children = glofile.children;
+  }
+
+  /**
    * @notice Set your Glofile foreground colors
    * @dev Sets all the foreground colors.
    * @param colors array of RGB triplets
@@ -145,33 +173,15 @@ contract Glofile {
   }
 
   /**
-   * @notice Get Glofile basic info
-   * @dev Gets all the info that can be retreived in a single call.
+   * @notice Get Glofile colors
+   * @dev Gets the foreground and background colors
    * @param account account to access - defaults to sender
-   * @return dontIndex flag to indicate that this Glofile should not be indexed
-   * @return glofileType Glofile type
-   * @return safetyLevel safety level
-   * @return fullName UTF-8 string of full name
-   * @return location UTF-8 string of location
-   * @return topics UTF-8 of space-separated topics compressed with DEFLATE
-   * @return uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
-   * @return parents UTF-8 string of space-separated usernames compressed with DEFLATE
-   * @return children UTF-8 string of space-separated usernames compressed with DEFLATE
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
    */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes topics, bytes uris, bytes parents, bytes children, bytes3[] foregroundColors, bytes3[] backgroundColors) {
+  function getColors(address account) constant returns (bytes3[] foregroundColors, bytes3[] backgroundColors) {
     if (account == 0) account = msg.sender;
     Glofile glofile = glofiles[account];
-    dontIndex = glofile.dontIndex;
-    glofileType = glofile.glofileType;
-    safetyLevel = glofile.safetyLevel;
-    fullName = glofile.fullName;
-    location = glofile.location;
-    topics = glofile.topics;
-    uris = glofile.uris;
-    parents = glofile.parents;
-    children = glofile.children;
     foregroundColors = glofile.foregroundColors;
     backgroundColors = glofile.backgroundColors;
   }
