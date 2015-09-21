@@ -127,7 +127,7 @@ contract Glofile {
   /**
    * @notice Get Glofile basic info
    * @dev Gets all the info that can be retreived in a single call.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
@@ -139,7 +139,6 @@ contract Glofile {
    * @return children UTF-8 string of space-separated usernames compressed with DEFLATE
    */
   function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes topics, bytes uris, bytes parents, bytes children) {
-    if (account == 0) account = msg.sender;
     Glofile glofile = glofiles[account];
     dontIndex = glofile.dontIndex;
     glofileType = glofile.glofileType;
@@ -175,12 +174,11 @@ contract Glofile {
   /**
    * @notice Get Glofile colors
    * @dev Gets the foreground and background colors
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
    */
   function getColors(address account) constant returns (bytes3[] foregroundColors, bytes3[] backgroundColors) {
-    if (account == 0) account = msg.sender;
     Glofile glofile = glofiles[account];
     foregroundColors = glofile.foregroundColors;
     backgroundColors = glofile.backgroundColors;
@@ -255,11 +253,10 @@ contract Glofile {
   /**
    * @notice Get the list of language code a Glofile bio is available in
    * @dev Gets the list of language codes the bio is available in.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return array of 3 letter ISO 639-3 language codes
    */
   function getBioLangCodes(address account) constant returns (bytes3[]) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].bioLangs;
   }
 
@@ -267,11 +264,10 @@ contract Glofile {
    * @notice Get the Glofile bio with language code `lang`
    * @dev Gets the bio in a specific language.
    * @param lang 3 letter ISO 639-3 language code
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
   function getBioTranslation(bytes3 lang, address account) constant returns (bytes) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].bioTranslations[lang];
   }
 
@@ -313,11 +309,10 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile avatars
    * @dev Gets the number of avatars.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return number of avatars
    */
   function getAvatarCount(address account) constant returns (uint) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].avatars.length;
   }
 
@@ -325,11 +320,10 @@ contract Glofile {
    * @notice Get the Glofile avatar with index `i`
    * @dev Gets the avatar with a specific index.
    * @param i index of avatar to get
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return binary IPFS hash of image
    */
   function getAvatar(uint i, address account) constant returns (bytes) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].avatars[i];
   }
 
@@ -371,11 +365,10 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile cover images
    * @dev Gets the number of cover images.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return number of cover images
    */
   function getCoverImageCount(address account) constant returns (uint) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].coverImages.length;
   }
 
@@ -383,11 +376,10 @@ contract Glofile {
    * @notice Get the Glofile cover image with index `i`
    * @dev Gets the cover image with a specific index.
    * @param i index of cover image to get
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return binary IPFS hash of image
    */
   function getCoverImage(uint i, address account) constant returns (bytes) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].coverImages[i];
   }
 
@@ -429,11 +421,10 @@ contract Glofile {
   /**
    * @notice Get the number of Glofile background images
    * @dev Gets the number of background images.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return number of background images
    */
   function getBackgroundImageCount(address account) constant returns (uint) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].backgroundImages.length;
   }
 
@@ -441,11 +432,10 @@ contract Glofile {
    * @notice Get the Glofile background image with index `i`
    * @dev Gets the background image with a specific index.
    * @param i index of cover image to get
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return binary IPFS hash of image
    */
   function getBackgroundImage(uint i, address account) constant returns (bytes) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].backgroundImages[i];
   }
 
@@ -474,11 +464,10 @@ contract Glofile {
   /**
    * @notice Get the number of public keys in the Glofile
    * @dev Gets the number of public keys.
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return the number of public keys
    */
   function getPublicKeyCount(address account) constant returns (uint) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].publicKeys.length;
   }
 
@@ -486,11 +475,10 @@ contract Glofile {
    * @notice Get the public key with index `i` from the Glofile
    * @dev Gets the public key with a specific index.
    * @param i index of public key to get
-   * @param account account to access - defaults to sender
+   * @param account Glofile to access
    * @return UTF-8 public key compressed with DEFLATE
    */
   function getPublicKey(uint i, address account) constant returns (bytes) {
-    if (account == 0) account = msg.sender;
     return glofiles[account].publicKeys[i];
   }
 
