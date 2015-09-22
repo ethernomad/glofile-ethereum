@@ -12,7 +12,6 @@ contract Glofile {
     GlofileType glofileType;
     SafetyLevel safetyLevel;
     uint16 publicKeyCount;
-    bytes uris;
     string fullName;
     string location;
     bytes3[] foregroundColors;
@@ -24,6 +23,7 @@ contract Glofile {
     string[] topics;
     string[] parents;
     string[] children;
+    string[] uris;
     mapping (bytes3 => bytes) bioTranslations;
   }
 
@@ -548,6 +548,62 @@ contract Glofile {
    */
   function getChild(address account, uint i) constant returns (string) {
     return glofiles[account].children[i];
+  }
+
+  /**
+   * @notice Set your Glofile uri with index `i` to `uri`
+   * @dev Sets the uri with a specific index.
+   * @param i index of uri to set
+   * @param uri UTF-8 string of uri
+   */
+  function setUri(uint i, string uri) {
+    string[] uris = glofiles[msg.sender].uris;
+    // Make sure the array is long enough.
+    if (uris.length <= i) {
+      uris.length = i + 1;
+    }
+    uris[i] = uri;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete your Glofile uri with index `i`
+   * @dev Deletes an uri with a specific index.
+   * @param i index of uri to delete
+   */
+  function deleteUri(uint i) {
+    delete glofiles[msg.sender].uris[i];
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete all your Glofile uris
+   * @dev Deletes all uris from the Glofile.
+   */
+  function deleteAllUris() {
+    delete glofiles[msg.sender].uris;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Get the number of Glofile uris
+   * @dev Gets the number of uris.
+   * @param account Glofile to access
+   * @return number of uris
+   */
+  function getUriCount(address account) constant returns (uint) {
+    return glofiles[account].uris.length;
+  }
+
+  /**
+   * @notice Get the Glofile uri with index `i`
+   * @dev Gets the uri with a specific index.
+   * @param account Glofile to access
+   * @param i index of uri to get
+   * @return UTF-8 string of uri
+   */
+  function getUri(address account, uint i) constant returns (string) {
+    return glofiles[account].uris[i];
   }
 
   /**
