@@ -65,21 +65,6 @@ contract Glofile {
   }
 
   /**
-   * @notice Get Glofile basic info
-   * @dev Gets all the info that can be retreived in a single call.
-   * @param account Glofile to access
-   * @return dontIndex flag to indicate that this Glofile should not be indexed
-   * @return glofileType Glofile type
-   * @return safetyLevel safety level
-   */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel) {
-    Glofile glofile = glofiles[account];
-    dontIndex = glofile.dontIndex;
-    glofileType = glofile.glofileType;
-    safetyLevel = glofile.safetyLevel;
-  }
-
-  /**
    * @notice Set your Glofile full name to `fullName`
    * @dev Sets the full name.
    * @param fullName UTF-8 string of full name - max length 128 chars
@@ -88,16 +73,6 @@ contract Glofile {
   function setFullName(string fullName) {
     glofiles[msg.sender].fullName = fullName;
     Update(msg.sender);
-  }
-
-  /**
-   * @notice Get Glofile full name for `account`
-   * @dev Gets the full name.
-   * @param account Glofile to access
-   * @return UTF-8 string of full name
-   */
-  function getFullName(address account) constant returns (string) {
-    return glofiles[account].fullName;
   }
 
   /**
@@ -111,13 +86,20 @@ contract Glofile {
   }
 
   /**
-   * @notice Get Glofile location for `account`
-   * @dev Gets the location.
+   * @notice Get Glofile basic info
+   * @dev Gets all the info that can be retreived in a single call.
    * @param account Glofile to access
-   * @return UTF-8 string of location
+   * @return dontIndex flag to indicate that this Glofile should not be indexed
+   * @return glofileType Glofile type
+   * @return safetyLevel safety level
    */
-  function getLocation(address account) constant returns (string) {
-    return glofiles[account].location;
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location) {
+    Glofile glofile = glofiles[account];
+    dontIndex = glofile.dontIndex;
+    glofileType = glofile.glofileType;
+    safetyLevel = glofile.safetyLevel;
+    fullName = glofile.fullName;
+    location = glofile.location;
   }
 
   /**
