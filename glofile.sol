@@ -12,18 +12,18 @@ contract Glofile {
     GlofileType glofileType;
     SafetyLevel safetyLevel;
     uint16 publicKeyCount;
+    bytes uris;
     string fullName;
     string location;
-    bytes topics;
-    bytes uris;
-    bytes parents;
-    bytes children;
     bytes3[] foregroundColors;
     bytes3[] backgroundColors;
     bytes3[] bioLangs;
     bytes[] avatars;
     bytes[] coverImages;
     bytes[] backgroundImages;
+    string[] topics;
+    string[] parents;
+    string[] children;
     mapping (bytes3 => bytes) bioTranslations;
   }
 
@@ -65,13 +65,39 @@ contract Glofile {
   }
 
   /**
+   * @notice Get Glofile basic info
+   * @dev Gets all the info that can be retreived in a single call.
+   * @param account Glofile to access
+   * @return dontIndex flag to indicate that this Glofile should not be indexed
+   * @return glofileType Glofile type
+   * @return safetyLevel safety level
+   */
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel) {
+    Glofile glofile = glofiles[account];
+    dontIndex = glofile.dontIndex;
+    glofileType = glofile.glofileType;
+    safetyLevel = glofile.safetyLevel;
+  }
+
+  /**
    * @notice Set your Glofile full name to `fullName`
    * @dev Sets the full name.
    * @param fullName UTF-8 string of full name - max length 128 chars
+   * @return fullName UTF-8 string of full name
    */
   function setFullName(string fullName) {
     glofiles[msg.sender].fullName = fullName;
     Update(msg.sender);
+  }
+
+  /**
+   * @notice Get Glofile full name for `account`
+   * @dev Gets the full name.
+   * @param account Glofile to access
+   * @return UTF-8 string of full name
+   */
+  function getFullName(address account) constant returns (string) {
+    return glofiles[account].fullName;
   }
 
   /**
@@ -85,70 +111,13 @@ contract Glofile {
   }
 
   /**
-   * @notice Set your Glofile topics
-   * @dev Sets the topics. This is a hint that this account will be publishing content in other contracts under these topics.
-   * @param topics UTF-8 string of space-separated topic compressed with DEFLATE
-   */
-  function setTopics(bytes topics) {
-    glofiles[msg.sender].topics = topics;
-    Update(msg.sender);
-  }
-
-  /**
-   * @notice Set your Glofile URIs
-   * @dev Sets the URIs. These URIs can reference anthing associated with the account, e.g. social network accounts.
-   * @param uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
-   */
-  function setUris(bytes uris) {
-    glofiles[msg.sender].uris = uris;
-    Update(msg.sender);
-  }
-
-  /**
-   * @notice Set your Glofile parents
-   * @dev Sets the parents.
-   * @param parents UTF-8 string of space-separated usernames compressed with DEFLATE
-   */
-  function setParents(bytes parents) {
-    glofiles[msg.sender].parents = parents;
-    Update(msg.sender);
-  }
-
-  /**
-   * @notice Set your Glofile children
-   * @dev Sets the children.
-   * @param children UTF-8 string of space-separated usernames compressed with DEFLATE
-   */
-  function setChildren(bytes children) {
-    glofiles[msg.sender].children = children;
-    Update(msg.sender);
-  }
-
-  /**
-   * @notice Get Glofile basic info
-   * @dev Gets all the info that can be retreived in a single call.
+   * @notice Get Glofile location for `account`
+   * @dev Gets the location.
    * @param account Glofile to access
-   * @return dontIndex flag to indicate that this Glofile should not be indexed
-   * @return glofileType Glofile type
-   * @return safetyLevel safety level
-   * @return fullName UTF-8 string of full name
-   * @return location UTF-8 string of location
-   * @return topics UTF-8 of space-separated topics compressed with DEFLATE
-   * @return uris UTF-8 string of space-separated percent-encoded URIs compressed with DEFLATE
-   * @return parents UTF-8 string of space-separated usernames compressed with DEFLATE
-   * @return children UTF-8 string of space-separated usernames compressed with DEFLATE
+   * @return UTF-8 string of location
    */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes topics, bytes uris, bytes parents, bytes children) {
-    Glofile glofile = glofiles[account];
-    dontIndex = glofile.dontIndex;
-    glofileType = glofile.glofileType;
-    safetyLevel = glofile.safetyLevel;
-    fullName = glofile.fullName;
-    location = glofile.location;
-    topics = glofile.topics;
-    uris = glofile.uris;
-    parents = glofile.parents;
-    children = glofile.children;
+  function getLocation(address account) constant returns (string) {
+    return glofiles[account].location;
   }
 
   /**
@@ -437,6 +406,174 @@ contract Glofile {
    */
   function getBackgroundImage(address account, uint i) constant returns (bytes) {
     return glofiles[account].backgroundImages[i];
+  }
+
+  /**
+   * @notice Set your Glofile topic with index `i` to `topic`
+   * @dev Sets the topic with a specific index.
+   * @param i index of topic to set
+   * @param topic UTF-8 string of topic (no whitespace)
+   */
+  function setTopic(uint i, string topic) {
+    string[] topics = glofiles[msg.sender].topics;
+    // Make sure the array is long enough.
+    if (topics.length <= i) {
+      topics.length = i + 1;
+    }
+    topics[i] = topic;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete your Glofile topic with index `i`
+   * @dev Deletes an topic with a specific index.
+   * @param i index of topic to delete
+   */
+  function deleteTopic(uint i) {
+    delete glofiles[msg.sender].topics[i];
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete all your Glofile topics
+   * @dev Deletes all topics from the Glofile.
+   */
+  function deleteAllTopics() {
+    delete glofiles[msg.sender].topics;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Get the number of Glofile topics
+   * @dev Gets the number of topics.
+   * @param account Glofile to access
+   * @return number of topics
+   */
+  function getTopicCount(address account) constant returns (uint) {
+    return glofiles[account].topics.length;
+  }
+
+  /**
+   * @notice Get the Glofile topic with index `i`
+   * @dev Gets the topic with a specific index.
+   * @param account Glofile to access
+   * @param i index of topic to get
+   * @return UTF-8 string of topic
+   */
+  function getTopic(address account, uint i) constant returns (string) {
+    return glofiles[account].topics[i];
+  }
+
+  /**
+   * @notice Set your Glofile parent with index `i` to `parent`
+   * @dev Sets the parent with a specific index.
+   * @param i index of parent to set
+   * @param parent UTF-8 string of parent
+   */
+  function setParent(uint i, string parent) {
+    string[] parents = glofiles[msg.sender].parents;
+    // Make sure the array is long enough.
+    if (parents.length <= i) {
+      parents.length = i + 1;
+    }
+    parents[i] = parent;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete your Glofile parent with index `i`
+   * @dev Deletes an parent with a specific index.
+   * @param i index of parent to delete
+   */
+  function deleteParent(uint i) {
+    delete glofiles[msg.sender].parents[i];
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete all your Glofile parents
+   * @dev Deletes all parents from the Glofile.
+   */
+  function deleteAllParents() {
+    delete glofiles[msg.sender].parents;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Get the number of Glofile parents
+   * @dev Gets the number of parents.
+   * @param account Glofile to access
+   * @return number of parents
+   */
+  function getParentCount(address account) constant returns (uint) {
+    return glofiles[account].parents.length;
+  }
+
+  /**
+   * @notice Get the Glofile parent with index `i`
+   * @dev Gets the parent with a specific index.
+   * @param account Glofile to access
+   * @param i index of parent to get
+   * @return UTF-8 string of parent
+   */
+  function getParent(address account, uint i) constant returns (string) {
+    return glofiles[account].parents[i];
+  }
+
+  /**
+   * @notice Set your Glofile child with index `i` to `child`
+   * @dev Sets the child with a specific index.
+   * @param i index of child to set
+   * @param child UTF-8 string of child
+   */
+  function setChild(uint i, string child) {
+    string[] children = glofiles[msg.sender].children;
+    // Make sure the array is long enough.
+    if (children.length <= i) {
+      children.length = i + 1;
+    }
+    children[i] = child;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete your Glofile child with index `i`
+   * @dev Deletes an child with a specific index.
+   * @param i index of child to delete
+   */
+  function deleteChild(uint i) {
+    delete glofiles[msg.sender].children[i];
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Delete all your Glofile children
+   * @dev Deletes all children from the Glofile.
+   */
+  function deleteAllChildren() {
+    delete glofiles[msg.sender].children;
+    Update(msg.sender);
+  }
+
+  /**
+   * @notice Get the number of Glofile children
+   * @dev Gets the number of children.
+   * @param account Glofile to access
+   * @return number of children
+   */
+  function getChildCount(address account) constant returns (uint) {
+    return glofiles[account].children.length;
+  }
+
+  /**
+   * @notice Get the Glofile child with index `i`
+   * @dev Gets the child with a specific index.
+   * @param account Glofile to access
+   * @param i index of child to get
+   * @return UTF-8 string of child
+   */
+  function getChild(address account, uint i) constant returns (string) {
+    return glofiles[account].children[i];
   }
 
   /**
