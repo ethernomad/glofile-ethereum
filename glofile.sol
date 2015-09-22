@@ -86,23 +86,6 @@ contract Glofile {
   }
 
   /**
-   * @notice Get Glofile basic info
-   * @dev Gets all the info that can be retreived in a single call.
-   * @param account Glofile to access
-   * @return dontIndex flag to indicate that this Glofile should not be indexed
-   * @return glofileType Glofile type
-   * @return safetyLevel safety level
-   */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location) {
-    Glofile glofile = glofiles[account];
-    dontIndex = glofile.dontIndex;
-    glofileType = glofile.glofileType;
-    safetyLevel = glofile.safetyLevel;
-    fullName = glofile.fullName;
-    location = glofile.location;
-  }
-
-  /**
    * @notice Set your Glofile foreground colors
    * @dev Sets all the foreground colors.
    * @param colors array of RGB triplets
@@ -123,14 +106,20 @@ contract Glofile {
   }
 
   /**
-   * @notice Get Glofile colors
-   * @dev Gets the foreground and background colors
+   * @notice Get Glofile basic info
+   * @dev Gets all the info that can be retreived in a single call.
    * @param account Glofile to access
-   * @return foregroundColors array of RGB triplets of foreground colors
-   * @return backgroundColors array of RGB triplets of background colors
+   * @return dontIndex flag to indicate that this Glofile should not be indexed
+   * @return glofileType Glofile type
+   * @return safetyLevel safety level
    */
-  function getColors(address account) constant returns (bytes3[] foregroundColors, bytes3[] backgroundColors) {
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes3[] foregroundColors, bytes3[] backgroundColors) {
     Glofile glofile = glofiles[account];
+    dontIndex = glofile.dontIndex;
+    glofileType = glofile.glofileType;
+    safetyLevel = glofile.safetyLevel;
+    fullName = glofile.fullName;
+    location = glofile.location;
     foregroundColors = glofile.foregroundColors;
     backgroundColors = glofile.backgroundColors;
   }
