@@ -68,7 +68,6 @@ contract Glofile {
    * @notice Set your Glofile full name to `fullName`
    * @dev Sets the full name.
    * @param fullName UTF-8 string of full name - max length 128 chars
-   * @return fullName UTF-8 string of full name
    */
   function setFullName(string fullName) {
     glofiles[msg.sender].fullName = fullName;
@@ -112,6 +111,10 @@ contract Glofile {
    * @return dontIndex flag to indicate that this Glofile should not be indexed
    * @return glofileType Glofile type
    * @return safetyLevel safety level
+   * @return fullName UTF-8 string of full name
+   * @return location UTF-8 string of location
+   * @return foregroundColors array of RGB triplets of foreground colors
+   * @return backgroundColors array of RGB triplets of background colors
    */
   function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes3[] foregroundColors, bytes3[] backgroundColors) {
     Glofile glofile = glofiles[account];
