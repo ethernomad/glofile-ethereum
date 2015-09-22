@@ -11,7 +11,6 @@ contract Glofile {
     bool dontIndex;
     GlofileType glofileType;
     SafetyLevel safetyLevel;
-    uint16 publicKeyCount;
     string fullName;
     string location;
     bytes3[] foregroundColors;
@@ -31,8 +30,6 @@ contract Glofile {
 
   event Update(address indexed account);
   event Delete(address indexed account);
-  event PublicKeyAdd(address indexed account, uint indexed i, bytes publicKey);
-  event PublicKeyDelete(address indexed account, uint indexed i);
 
   /**
    * @notice Set your Glofile don't index flag to `dontIndex`
@@ -604,25 +601,6 @@ contract Glofile {
    */
   function getUri(address account, uint i) constant returns (string) {
     return glofiles[account].uris[i];
-  }
-
-  /**
-   * @notice Add a public key to your Glofile
-   * @dev Adds a public key.
-   * @param publicKey UTF-8 public key compressed with DEFLATE
-   */
-  function addPublicKey(bytes publicKey) {
-    uint i = glofiles[msg.sender].publicKeyCount++;
-    PublicKeyAdd(msg.sender, i, publicKey);
-  }
-
-  /**
-   * @notice Delete the public key with index `i` from your Glofile
-   * @dev Deletes the public key with a specific index.
-   * @param i index of public key to delete
-   */
-  function deletePublicKey(uint i) {
-    PublicKeyDelete(msg.sender, i);
   }
 
   /**
