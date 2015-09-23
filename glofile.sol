@@ -207,7 +207,7 @@ contract Glofile {
    * @param lang 3 letter ISO 639-3 language code
    * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
-  function getBioTranslation(address account, bytes3 lang) constant returns (bytes) {
+  function getBio(address account, bytes3 lang) constant returns (bytes) {
     return glofiles[account].bioTranslations[lang];
   }
 
