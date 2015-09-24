@@ -15,6 +15,7 @@ contract Glofile {
     string location;
     bytes3[] foregroundColors;
     bytes3[] backgroundColors;
+    bytes3[] languages;
     bytes3[] bioLangs;
     bytes[] avatars;
     bytes[] coverImages;
@@ -102,6 +103,16 @@ contract Glofile {
   }
 
   /**
+   * @notice Sets the Glofile langauges your account may publish in
+   * @dev Sets all the languages the account may publish in.
+   * @param languages array of 3 letter ISO 639-3 language codes
+   */
+  function setLanguages(bytes3[] languages) {
+    glofiles[msg.sender].languages = languages;
+    Update(msg.sender);
+  }
+
+  /**
    * @notice Get Glofile basic info
    * @dev Gets all the info that can be retreived in a single call.
    * @param account Glofile to access
@@ -112,8 +123,9 @@ contract Glofile {
    * @return location UTF-8 string of location
    * @return foregroundColors array of RGB triplets of foreground colors
    * @return backgroundColors array of RGB triplets of background colors
+   * @return languages array of 3 letter ISO 639-3 language codes
    */
-  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes3[] foregroundColors, bytes3[] backgroundColors) {
+  function getBasicInfo(address account) constant returns (bool dontIndex, GlofileType glofileType, SafetyLevel safetyLevel, string fullName, string location, bytes3[] foregroundColors, bytes3[] backgroundColors, bytes3[] languages) {
     Glofile glofile = glofiles[account];
     dontIndex = glofile.dontIndex;
     glofileType = glofile.glofileType;
@@ -122,6 +134,7 @@ contract Glofile {
     location = glofile.location;
     foregroundColors = glofile.foregroundColors;
     backgroundColors = glofile.backgroundColors;
+    languages = glofile.languages;
   }
 
   /**
