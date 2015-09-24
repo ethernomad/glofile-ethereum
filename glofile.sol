@@ -16,7 +16,7 @@ contract Glofile {
     bytes3[] foregroundColors;
     bytes3[] backgroundColors;
     bytes3[] languages;
-    bytes3[] bioLangs;
+    bytes3[] bioLanguages;
     bytes[] avatars;
     bytes[] coverImages;
     bytes[] backgroundImages;
@@ -138,53 +138,53 @@ contract Glofile {
   }
 
   /**
-   * @notice Set your Glofile bio with langauge code `lang`
+   * @notice Set your Glofile bio with langauge code `language`
    * @dev Sets the bio in a specific language.
-   * @param lang 3 letter ISO 639-3 language code
+   * @param language 3 letter ISO 639-3 language code
    * @param translation UTF-8 Markdown of bio compressed with DEFLATE - max Markdown length 256 chars
    */
-  function setBio(bytes3 lang, bytes translation) {
+  function setBio(bytes3 language, bytes translation) {
     Glofile glofile = glofiles[msg.sender];
     // Check if we already have the language code.
-    for (uint i = 0; i < glofile.bioLangs.length; i++) {
-      if (glofile.bioLangs[i] == lang) {
+    for (uint i = 0; i < glofile.bioLanguages.length; i++) {
+      if (glofile.bioLanguages[i] == language) {
         break;
       }
     }
-    if (i == glofile.bioLangs.length) {
+    if (i == glofile.bioLanguages.length) {
       // We didn't find it. Try to find a free slot.
-      for (i = 0; i < glofile.bioLangs.length; i++) {
-        if (glofile.bioLangs[i] == 0) {
+      for (i = 0; i < glofile.bioLanguages.length; i++) {
+        if (glofile.bioLanguages[i] == 0) {
           break;
         }
       }
-      if (i == glofile.bioLangs.length) {
+      if (i == glofile.bioLanguages.length) {
         // We didn't find a free slot. Make the array bigger.
-        glofile.bioLangs.length++;
+        glofile.bioLanguages.length++;
       }
-      glofile.bioLangs[i] = lang;
+      glofile.bioLanguages[i] = language;
     }
     // Set translation.
-    glofile.bioTranslations[lang] = translation;
+    glofile.bioTranslations[language] = translation;
     Update(msg.sender);
   }
 
   /**
-   * @notice Delete your Glofile bio with language code `lang`
+   * @notice Delete your Glofile bio with language code `language`
    * @dev Deletes a bio translation.
-   * @param lang 3 letter ISO 639-3 language code
+   * @param language 3 letter ISO 639-3 language code
    */
-  function deleteBio(bytes3 lang) {
+  function deleteBio(bytes3 language) {
     Glofile glofile = glofiles[msg.sender];
-    for (uint i = 0; i < glofile.bioLangs.length; i++) {
-      if (glofile.bioLangs[i] == lang) {
-        delete glofile.bioLangs[i];
+    for (uint i = 0; i < glofile.bioLanguages.length; i++) {
+      if (glofile.bioLanguages[i] == language) {
+        delete glofile.bioLanguages[i];
         break;
       }
     }
     // Delete the actual mapping in case a client accesses without checking
     // language key.
-    delete glofile.bioTranslations[lang];
+    delete glofile.bioTranslations[language];
     Update(msg.sender);
   }
 
@@ -196,10 +196,10 @@ contract Glofile {
     Glofile glofile = glofiles[msg.sender];
     // Delete the actual mappings in case a client accesses without checking
     // language key.
-    for (uint i = 0; i < glofile.bioLangs.length; i++) {
-      delete glofile.bioTranslations[glofile.bioLangs[i]];
+    for (uint i = 0; i < glofile.bioLanguages.length; i++) {
+      delete glofile.bioTranslations[glofile.bioLanguages[i]];
     }
-    delete glofile.bioLangs;
+    delete glofile.bioLanguages;
     Update(msg.sender);
   }
 
@@ -209,19 +209,19 @@ contract Glofile {
    * @param account Glofile to access
    * @return array of 3 letter ISO 639-3 language codes
    */
-  function getBioLangCodes(address account) constant returns (bytes3[]) {
-    return glofiles[account].bioLangs;
+  function getBioLanguages(address account) constant returns (bytes3[]) {
+    return glofiles[account].bioLanguages;
   }
 
   /**
-   * @notice Get the Glofile bio with language code `lang`
+   * @notice Get the Glofile bio with language code `language`
    * @dev Gets the bio in a specific language.
    * @param account Glofile to access
-   * @param lang 3 letter ISO 639-3 language code
+   * @param language 3 letter ISO 639-3 language code
    * @return UTF-8 Markdown of bio compressed with DEFLATE
    */
-  function getBio(address account, bytes3 lang) constant returns (bytes) {
-    return glofiles[account].bioTranslations[lang];
+  function getBio(address account, bytes3 language) constant returns (bytes) {
+    return glofiles[account].bioTranslations[language];
   }
 
   /**
