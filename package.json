@@ -1,0 +1,24 @@
+{
+  "name": "glofile",
+  "version": "0.0.0",
+  "description": "Gravatar clone for Ethereum.",
+  "main": "glofile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bluedroplet/glofile-ethereum.git"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "profile"
+  ],
+  "author": "Jonathan Brown <jbrown@bluedroplet.com>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/bluedroplet/glofile-ethereum/issues"
+  },
+  "dependencies": {
+    "bs58": "^3.0.0",
+    "buffer": "^3.5.0"
+  }
+}
